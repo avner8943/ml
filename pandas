@@ -1,0 +1,252 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Welcome To Colaboratory",
+      "provenance": [],
+      "collapsed_sections": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/avner8943/ml/blob/master/pandas\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "knHKBCJfDSzC",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 242
+        },
+        "outputId": "00f05c1e-af39-4689-b707-670a07fa1d19"
+      },
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "chipo = pd.read_csv('/content/chipotle.tsv', sep = '\\t')\n",
+        "\n",
+        "print(chipo.head(10))"
+      ],
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "   order_id  ...  item_price\n",
+            "0         1  ...      $2.39 \n",
+            "1         1  ...      $3.39 \n",
+            "2         1  ...      $3.39 \n",
+            "3         1  ...      $2.39 \n",
+            "4         2  ...     $16.98 \n",
+            "5         3  ...     $10.98 \n",
+            "6         3  ...      $1.69 \n",
+            "7         4  ...     $11.75 \n",
+            "8         4  ...      $9.25 \n",
+            "9         5  ...      $9.25 \n",
+            "\n",
+            "[10 rows x 5 columns]\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "TvpoplYYKiHf",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "75c9e2d3-a50e-4c8f-870a-a7633269fb36"
+      },
+      "source": [
+        "print(chipo.shape[0])"
+      ],
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "4622\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "VVTpm-fKK53M",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 86
+        },
+        "outputId": "4b0865d8-cfb4-48c3-c7eb-7cbb22d719bf"
+      },
+      "source": [
+        "print(len(chipo.columns))\n",
+        "print(chipo.columns)"
+      ],
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "5\n",
+            "Index(['order_id', 'quantity', 'item_name', 'choice_description',\n",
+            "       'item_price'],\n",
+            "      dtype='object')\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "bUp0T6pYLYYt",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "93ce96d9-17bf-4148-89a5-cbab334f58ed"
+      },
+      "source": [
+        "a = chipo.item_name.value_counts()\n",
+        "print(a.index[0])"
+      ],
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Chicken Bowl 726\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "THqZDQbmNZV-",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "aa3cd8b1-5cac-41c9-e0c5-55d6bcef85a5"
+      },
+      "source": [
+        "print(len(a))"
+      ],
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "50\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "e9EF7gE9NlWm",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "0fdb45dd-fde8-4934-c04b-5460d449af55"
+      },
+      "source": [
+        "a2 = chipo.choice_description.value_counts()\n",
+        "print(a2.index[0])"
+      ],
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "[Diet Coke]\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "igV_SYJgNwTG",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "5d6c93f8-9e6a-478d-d724-df05bf1cdead"
+      },
+      "source": [
+        "print(len(a)+len(a2))"
+      ],
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "1093\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "roZWX-9TN1qG",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "chipo.item_price = chipo.item_price.str[1:]\n",
+        "chipo.item_price = chipo.item_price.astype('float')"
+      ],
+      "execution_count": 23,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Q_lQ11CwOVFk",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
