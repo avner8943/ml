@@ -1,0 +1,111 @@
+np.random.seed(0)
+
+
+ # sigmoid
+def sig(x):
+
+  return 1/(1+np.exp(x))
+
+def der_sig(x):
+
+  return x*(1-x)
+
+
+bin_len = 8 # 8 digits for each int
+
+# list for saving binary repsetantion of int
+bin_arr = np.unpackbits(np.array([range(2**bin_len)], dtype=np.uint8).T,axis=1)
+
+lr = 0.1 # learnning rate
+
+# layers dimenions
+in_dim =2
+h_dim = 16 # 
+out_dim = 1
+
+
+# initialize
+w_xh = 2*np.random.random((in_dim,h_dim)) - 1
+w_yh = 2*np.random.random((h_dim,out_dim)) - 1
+w_hh = 2*np.random.random((h_dim,h_dim)) - 1
+
+
+
+# trainning loop
+iters = 10000
+max_int = 2**bin_len/2
+errors = []
+
+for i in range(iters):
+
+
+  # net inputs
+  int_1 = np.random.randint(max_int)
+  int_1b = bin_arr[int_1]
+
+  int_2 = np.random.randint(max_int)
+  int_2b = bin_arr[int_2]
+
+  sum_int = int_1+int_2
+  sum_intb = bin_arr[sum_int]
+
+
+  # backprpogation arrays
+  predicts_ders = []
+
+  int_1b_r = int_1b[::-1]
+  int_2b_r = int_2b[::-1]
+
+  out_der = []
+  h_array = []
+  h_t_old = np.zeros(h_dim)
+  
+  over_all_err = 0
+
+  for bin in range(bin_len):
+
+    x = np.array([int_1b_r[bin],int_2b_r[bin]])
+    y = sum_intb[bin].reshape((1,1))
+
+    h_t = sig(np.dot(h_t_old, w_hh)+np.dot(x,w_xh))
+    h_array.append(h_t)
+
+    y_pred = sig(np.dot(h_t,w_yh))
+
+    err = y - y_pred
+
+    over_all_err += np.abs(err[0])
+
+    out_der.append(err*der_sig(y_pred))
+
+    h_t_old = h_t
+
+  next_h_delta = np.zeros(h_dim)
+
+  h_array = h_array[::-1]
+  h_array.append(np.zeros(h_dim))
+  out_der = out_der[::-1]
+  for bin in range(bin_len):
+
+    x = np.array([int_1b[bin], int_2b[bin]]).reshape((1,2))
+    h_t = h_array[bin].reshape((1,h_dim))
+    h_t_old  = h_array[bin+1].reshape((1,h_dim))
+
+    out_delta = out_der[bin]
+
+
+    h_delta = (next_h_delta.dot(w_hh.T)+ out_delta.dot(w_yh.T))* der_sig(h_t)
+
+    w_yh += lr*(h_t.T.dot(out_delta))
+    w_hh += lr*(h_t_old.T.dot(h_delta))
+    w_xh += lr*(x.T.dot(h_delta))
+
+    next_h_delta = h_delta
+
+  errors.append(over_all_err)
+  
+
+plt.plot(list(range(len(errors))), errors,  'bo')
+plt.show()
+  
+
